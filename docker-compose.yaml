@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  djolo_api:
+    container_name: django_djolo_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - djolo_db
+
+  djolo_db:
+    container_name: django_djolo_db
+    image: mysql:5.7.22
+    restart: always
+    environment:
+      MYSQL_DATABASE: djolo_platform
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 33067:3306
